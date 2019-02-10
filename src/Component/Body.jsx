@@ -1,11 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Input, Button, List } from 'antd';
 import store from '../reducers/store';
+import { NavLink } from 'react-router-dom';
+import axios from "axios";
 
 class Body extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      projects: []
+    };
     this.state = store.getState();
     this.handleInputchange = this.handleInputchange.bind(this);
     this.handleInputchangeOne = this.handleInputchangeOne.bind(this);
@@ -14,6 +19,17 @@ class Body extends Component {
     this.handleStoreChange = this.handleStoreChange.bind(this);
     store.subscribe(this.handleStoreChange)
   }
+
+  componentDidMount() {
+    axios.get('./src/data/mycv.json')
+        .then(response => {
+          this.setState({
+            projects: response.data
+          })
+        })
+   }
+
+
 
   handleInputchange(e) {
     const action = {
@@ -59,6 +75,21 @@ class Body extends Component {
 
   render() {
     const { TextArea } = Input;
+    const projects = this.state.projects
+    let projectsList 
+
+    if (projects.length > 0) {
+      projectsList = projects.map(project => {
+       return (
+         <div key={project.id} >
+            <h1>{project.name}</h1>
+            <p>{project.experience}</p>
+            <p>{project.education}</p>
+         </div>
+        )
+      })
+    }
+    
     return (
       <div className="body-div">
         <div className="body-div-left">
@@ -89,6 +120,10 @@ class Body extends Component {
             <div>
              <Button className="button-div" onClick={this.handleBtnClick}>submit</Button>
             </div>
+            <div className="Cv-div">
+             {projectsList}
+            <NavLink activeStyle={{fontWeight: "bold"}} to='/about'>About Me</NavLink>
+            </div>
           </div>
           <div className="body-list-div">
             <ul>
@@ -109,7 +144,7 @@ class Body extends Component {
                 }}
               />
             </ul>
-          </div> <br />    
+          </div>    
         </div> 
 
         <style jsx>{`
