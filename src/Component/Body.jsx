@@ -22,14 +22,12 @@ class Body extends Component {
 
   componentDidMount() {
     axios.get('./src/data/mycv.json')
-        .then(response => {
-          this.setState({
-            projects: response.data
-          })
+      .then(response => {
+        this.setState({
+          projects: response.data
         })
+      })
    }
-
-
 
   handleInputchange(e) {
     const action = {
@@ -78,17 +76,17 @@ class Body extends Component {
     const projects = this.state.projects
     let projectsList 
 
-    if (projects.length > 0) {
-      projectsList = projects.map(project => {
-       return (
-         <div key={project.id} >
-            <h1>{project.name}</h1>
-            <p>{project.experience}</p>
-            <p>{project.education}</p>
-         </div>
-        )
-      })
-    }
+    // if (projects.length > 0) {
+    //   projectsList = projects.map(project => {
+    //    return (
+    //      <div key={project.id} >
+    //         <h1>{project.name}</h1>
+    //         <p>{project.experience}</p>
+    //         <p>{project.education}</p>
+    //      </div>
+    //     )
+    //   })
+    // }
     
     return (
       <div className="body-div">
@@ -121,7 +119,7 @@ class Body extends Component {
              <Button className="button-div" onClick={this.handleBtnClick}>submit</Button>
             </div>
             <div className="Cv-div">
-             {projectsList}
+             {/* {projectsList} */}
             <NavLink activeStyle={{fontWeight: "bold"}} to='/about'>About Me</NavLink>
             </div>
           </div>

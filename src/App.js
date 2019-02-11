@@ -12,10 +12,10 @@ const App = () => {
         <Header />
       </div>
       <div className="body-div">
-        <Link to='/'><Body /></Link>     
+        <Body />    
       </div>
       <div className="footer-div">
-      <Footer />
+       <Footer />
       </div>
     </div>
 
